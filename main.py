@@ -20,9 +20,6 @@ def parse_args():
     ap = argparse.ArgumentParser()
     ap.add_argument('video', help='the video to use')
     ap.add_argument('-f', '--fps', type=int, default=8, help='framerate of output')
-    # ap.add_argument('-w', '--width', type=int, default=80, help='width of the output (aspect ratio is preserved if done alone)')
-    # ap.add_argument('-t', '--height', type=int, help='height of the output')
-    # ap.add_argument('-a', '--aspectratio', default='16:9', help='Used to infer the height if only width is given. Ignored if height and width are given')
     ap.add_argument('-c', '--convert', action='store_true', help='Convert video to frames but do not scale')
     ap.add_argument('-v', '--verbose', action='store_true', help='Verbose output')
     ap.add_argument('-s', '--silent', action='store_true', help='Output nothing but the image')
@@ -155,13 +152,6 @@ def main():
     silent = options.silent
     fps = options.fps
     headers = options.headers
-    # if not silent:
-        # print('YOU MUST SET THE TERMINAL TO WIDTH 100 OR 200!!')
-        # for i in ('...' * 4):
-            # print(i, end='')
-            # sys.stdout.flush()
-            # time.sleep(0.2)
-        # print()
     convert_video_to_frames(options.video, options.fps)
     if not options.convert:
         scale_video_frames(options.video)

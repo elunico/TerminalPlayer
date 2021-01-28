@@ -76,28 +76,22 @@ def scale_video_frames(videopath, n=3):
 
 
 colors = {
-  'black': '\u001b[40;1m',
-  'red': '\u001b[41;1m',
-  'green': '\u001b[42;1m',
-  'yellow': '\u001b[43;1m',
-  'blue': '\u001b[44;1m',
-  'magenta': '\u001b[45;1m',
-  'cyan': '\u001b[46;1m',
-  'white': '\u001b[47;1m'
+  0: '\u001b[40;1m',
+  (1 << 2): '\u001b[41;1m',
+  (1 << 1): '\u001b[42;1m',
+  ((1 << 2) | (1 << 1)): '\u001b[43;1m',
+  (1 << 0): '\u001b[44;1m',
+  ((1 << 2) | (1 << 0)): '\u001b[45;1m',
+  ((1 << 1) | (1 << 0)): '\u001b[46;1m',
+  7: '\u001b[47;1m'
 }
 
 def hex_to_ansi(hex):
     r, g, b = hex[1:3], hex[3:5], hex[5:]
     r, g, b = int(r, base=16), int(g, base=16), int(b, base=16)
     r, g, b = r // 127, g // 127, b // 127
-    if r and g and b: return colors['white']
-    elif r and g and not b: return colors['yellow']
-    elif r and not g and b: return colors['magenta']
-    elif r and not g and not b: return colors['red']
-    elif not r and g and b: return colors['cyan']
-    elif not r and not g and b: return colors['blue']
-    elif not r and g and not b: return colors['green']
-    else: return colors['black']
+    index = (r << 2) | (g << 1) | (b << 0)
+    return colors[index]
 
 def color_from_style(style):
     r =  style.split(':')[-1].strip(';')
